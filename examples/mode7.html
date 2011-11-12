@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mode 7</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		html{
+			height: 100%;
+		}
+		body{
+			background: black;
+			overflow: hidden;
+			height: 100%;
+		}
+		div{
+			position: absolute;
+			left: 50%;
+			margin-left: -240px;
+			top: 50%;
+			margin-top: -160px;
+		}
+		canvas{
+		
+			width: 480px;
+			height: 320px;
+		}
+		a{
+			color: white;
+			
+		}
+	</style>
+</head>
+<body>
+<div id="content" style="position: relative">
+	<!--img src="gfx/screenshot.gif" style="display: block; position: absolute; opacity: 0.5"/-->
+	<canvas id="c" 
+			width="240"
+			height="160"
+			style="border:1px solid #000; display:block; background: lightBlue;"></canvas>
+	<!--canvas id="mode7Canvas" 
+			width="960"
+			height="640"
+			style="border:1px solid #000; display:block; background: lightBlue;"></canvas-->
+</div>
+</body>
+<script type="text/javascript" src="../util/Loader.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+	Loader.load([	"../util/Key.js",
+			"../util/Mouse.js",
+			"../util/Animation.js",
+			"../util/FPS.js",
+			"../util/Vector.js",
+			"../util/Line.js",
+			"../Origami/Origami.js",
+			"../Origami/OrigamiDraw.js",
+			"../Origami/OrigamiRender.js",
+			"../Origami/OrigamiUtil.js",
+			"mode7/Kart.js",
+			"mode7/world.js",
+			"mode7/gui.js",
+			"mode7/game.js"]);
+}
+</script>
+</html>

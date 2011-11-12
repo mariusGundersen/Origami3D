@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ripples</title>
+<meta http-equiv="pragma" content="no-cache">
+<style>
+html{
+	background: #666;;
+}
+body{
+	position: absolute;
+	left: 50%;
+	margin-left: -320px;
+}
+label{
+	width: 10em;
+	display: inline-block;
+}
+input[type=number]{
+	width: 3em;
+}
+
+.right{
+	float:right;
+}
+#form{
+	width:640px;
+}
+</style>
+</head>
+<body>
+<div id="content">
+	<canvas id="c" 
+			width="640"
+			height="480"
+			style="border:1px solid #000; display:block; background: grey;"></canvas>
+</div>
+<div id="form">
+	<div class="right">
+	<input type="radio" name="waveEquation" id="waveEquationLinear" value="linear">Linear</input><br>
+	<input type="radio" name="waveEquation" id="waveEquationDiagonal" value="diagonal">Diagonal</input><br>
+	<input type="radio" name="waveEquation" id="waveEquationRadial" value="radial" checked>Radial</input><br>
+	</div>
+	<div>
+	<label for="gridSize">Grid size:</label><input type="number" id="gridSizeX" value="20" />x<input type="number" id="gridSizeY" value="15" /><br>
+	<label for="waveSpeed">Wave Speed:</label><input type="number" id="waveSpeed" value="1" /><br>
+	<label for="waveFrequency">Wave Frequency:</label><input type="number" id="waveFrequency" step="1" value="4" /><br>
+	<label for="waveMagnitude">Wave Magnitude:</label><input type="number" id="waveMagnitude" step="10" value="50" /><br>
+	</div>
+	<button id="update">Update</button>
+</div>
+</body>
+<script type="text/javascript" src="../util/Loader.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+	Loader.load([	"../util/Key.js",
+			"../util/Mouse.js",
+			"../util/FPS.js",
+			"../util/Animation.js",
+			"../Origami/Origami.js",
+			"../Origami/OrigamiDraw.js",
+			"../Origami/OrigamiRender.js",
+			"../Origami/OrigamiUtil.js",
+			"ripples/main.js"]);
+}
+</script>
+</html>

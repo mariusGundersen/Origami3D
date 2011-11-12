@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Raycasting</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background: black;
+			overflow: hidden;
+		}
+		div{
+			position: absolute;
+			left: 50%;
+			margin-left: -360px;
+			top: 50%;
+			margin-top: -240px;
+		}
+		canvas{
+		
+			width: 720px;
+			height: 480px;
+		}
+		a{
+			color: white;
+			
+		}
+	</style>
+</head>
+<body>
+<div id="content">
+	<canvas id="c" 
+			width="320"
+			height="240"
+			style="border:1px solid #000; display:block; background: black; cursor:crosshair;"></canvas>
+</div>
+</body>
+<script type="text/javascript" src="../util/Loader.js"></script>
+<script type="text/javascript">
+window.onload = function(){
+	Loader.load([	"../util/Key.js",
+			"../util/Mouse.js",
+			"../util/FPS.js",
+			"../util/Animation.js",
+			"../Origami/Origami.js",
+			"../Origami/OrigamiDraw.js",
+			"../Origami/OrigamiRender.js",
+			"../Origami/OrigamiUtil.js",
+			"raycasting/world.js",
+			"raycasting/common.js",
+			"raycasting/game.js"]);
+}
+</script>
+</html>

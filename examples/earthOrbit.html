@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Earth and Sun</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background: black;
+			width: 100%;
+		}
+		div{
+			position: absolute;
+			left: 50%;
+			margin-left: -320px;
+			top: 50%;
+			margin-top: -240px;
+		}
+		a{
+			color: white;
+			
+		}
+	</style>
+</head>
+<body>
+<div>
+	<canvas id="c" 
+			width="640"
+			height="480"
+			style="border:1px solid #000; display:block; background: black;"></canvas>
+	<a href="#" onclick="loadWorld('earthOrbit/earthNight.json'); event.preventDefault(); return false;">Earth at Night</a>
+	<a href="#" onclick="loadWorld('earthOrbit/earthDay.json'); event.preventDefault(); return false;">Earth at Day</a>
+</div>
+</body>
+<script type="text/javascript" src="../util/Loader.js"></script>
+<script type="text/javascript">
+Loader.load([	"../util/Key.js",
+		"../util/Mouse.js",
+		"../util/FPS.js",
+		"../util/Animation.js",
+		"../Origami/Origami.js",
+		"../Origami/OrigamiDraw.js",
+		"../Origami/OrigamiRender.js",
+		"../Origami/OrigamiUtil.js",
+		"earthOrbit/main.js",
+		"earthOrbit/earthDay.json"]);
+</script>
+</html>
