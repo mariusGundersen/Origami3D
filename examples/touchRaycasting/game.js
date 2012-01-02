@@ -84,7 +84,8 @@ Origami.initWorld(function(){
 	setTimeout(doResize, 1);
 	setTimeout(function(){scrollTo(0,1);},1);
 	if("DeviceOrientationEvent" in window){
-		window.addEventListener("interfaceorientation", setRotation, false);
+		//window.addEventListener("interfaceorientation", setRotation, false);
 	}
+	
 	Animation.start(playGame);
 });

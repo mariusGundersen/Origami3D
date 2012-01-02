@@ -1,0 +1,48 @@
+<html>
+<head>
+	<title>Skybox</title>
+		
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-icon-precomposed" href="gfx/skybox_w.jpg">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	
+	<style>
+	html,body{
+		background: black;
+		height: 100%;
+		width: 100%;
+	}
+	*{
+		margin:0;
+		padding:0;
+	}
+	canvas{
+		width: 100%;
+		height: 100%;
+		border: 0px solid #000;
+		margin: 0 auto;
+	}
+	</style>
+
+</head>
+<body>
+	<canvas id="c" 
+			width="320"
+			height="320"
+			style="border:0px solid #000; display:block; background: #888;"></canvas>
+</body>
+<script type="text/javascript" src="../util/Loader.js"></script>
+<script type="text/javascript">
+Loader.load(["../util/InterfaceOrientation.js",
+			"../util/Mouse.js",
+			"../util/FPS.js",
+			"../util/Animation.js",
+			"../Origami/Origami.js",
+			"../Origami/OrigamiDraw.js",
+			"../Origami/OrigamiRender.js",
+			"../Origami/OrigamiUtil.js",
+			"skybox/world.js",
+			"skybox/common.js",
+			"skybox/game.js"]);
+</script>
+</html>

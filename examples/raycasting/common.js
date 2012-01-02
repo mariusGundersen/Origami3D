@@ -151,6 +151,7 @@ function playGame(time){
 		
 		var speed = time/20;
 		
+		
 		moveEnemy(speed);
 				
 		var input = getUserInput(speed);

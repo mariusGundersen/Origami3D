@@ -1,0 +1,24 @@
+Skybox Islands by Deelkar
+
+my first attempt on a skybox for 3d game maps
+
+render_program: tg0811
+render_time: 30m 22s
+
+texture_size: 512x512 px
+
+Camera position:
+altitude above sea level: 250m
+altitude above ground: 250m
+
+camera orientation for textures (direction and elevation)
+n:   0°   0°
+e:  90°   0°
+s: 180°   0°
+w: 270°   0°
+t:   0°  90°
+b:   0° -90°
+
+
+Description:
+some islands in the sea on a sunny day

@@ -41,9 +41,10 @@ function getUserInput(speed){
 
 function drawGUI(){
 	
-	if(Origami.world.videos[0].video.duration > 0){
-		Origami.world.canvas.video.context2d.drawImage(Origami.world.videos[0].video, 0, 0);	
-	}
+		if(Origami.world.videos[0].video.duration > 0){
+			Origami.world.canvas.video.context2d.drawImage(Origami.world.videos[0].video, 0, 0);	
+		}
+	
 	
 }
 
