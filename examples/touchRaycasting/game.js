@@ -4,81 +4,87 @@
 
 
 function doResize(event){
-	//Fullscreen canvas
-	function ensure(a, b, c){
-		if(a[b] != c){
-			a[b] = c;
-		}
+	//Fullscreen canvas, correct aspect ratio
+	var w = document.body.clientWidth;
+
+	var h = Origami.canvas.height/Origami.canvas.width*w;
+	if(h > document.body.clientHeight){
+		h = document.body.clientHeight;
+		w = Origami.canvas.width/Origami.canvas.height*h;
 	}
-	ensure(document.body,"scrollTop", window.outerHeight - window.innerHeight);
-	ensure(Origami.canvas.style,"width", window.outerWidth+"px");
-	ensure(Origami.canvas.style,"height", window.outerHeight+"px");
-	
+
+	Origami.canvas.style.width = w + "px";	
+	Origami.canvas.style.height = h + "px"
 };
 
 
+var currentOrientation = {alpha: false, beta:0, gamma:0};
+var downPos = {x:-100, y:-100, alpha:0, beta:0, gamma:0};
 
-var downPos = {x:-100, y:-100};
-
-function playGame(time){
-	if(Game.isPaused){
-		Origami.ctx.textAlign = "center";
-		Origami.ctx.textBaseline = "middle";
-		Origami.ctx.font = '24pt arial,sans-serif';
-		Origami.ctx.fillStyle = "#FFAA00";
-		Origami.ctx.strokeStyle = "#000000";
-		Origami.ctx.strokeText("PAUSED",Origami.size.hw,Origami.size.hh);
-		Origami.ctx.fillText("PAUSED",Origami.size.hw,Origami.size.hh);
-		if(Mouse.isDown(0)){
-			downPos.x = Mouse.pos.x;
-			downPos.y = Mouse.pos.y;
-			Game.isPaused = false;
-			doResize();
-		}
+function shouldUnpause(){
+	if(Mouse.isDown(0)){
+		downPos.x = Mouse.pos.x;
+		downPos.y = Mouse.pos.y;
+		downPos.alpha = currentOrientation.alpha;
+		downPos.beta = currentOrientation.beta;
+		downPos.gamma = currentOrientation.gamma;
+		doResize();
+		return true;
 	}else{
-		if(!Mouse.isDown(0)){
-			Game.isPaused = true;
-			//return;
-		}
-		
-		var speed = time/20;
-		
-		moveEnemy(speed);
-		
-		var forward = (downPos.y - Mouse.pos.y)*speed/10;//(Key.isDown(87) - Key.isDown(83))*Game.walkSpeed*speed;
-		var strafe = 0;//(Key.isDown(65) - Key.isDown(68))*Game.strafeSpeed*speed;
-		var rotate =  (Mouse.pos.x - downPos.x)*speed/50;//Mouse.pos.xh/Origami.size.hw;
+		return false;
+	}
+}
+function shouldPause(){
+	return !Mouse.isDown(0);
+}
+
+function getUserInput(speed){
+	var forward, strafe, rotate;
+	if(currentOrientation.alpha !== false){
+		forward = -(currentOrientation.beta - downPos.beta)*100;
+		strafe = -(currentOrientation.gamma - downPos.gamma)*100;
+		rotate = -Game.hero.ry + currentOrientation.alpha;
+	}else{
+		forward = (downPos.y - Mouse.pos.y)*speed/10;
+		strafe = 0;
+		rotate = (Mouse.pos.x - downPos.x)*speed/500;
 		rotate = rotate<-1 ? -1 : (rotate > 1 ? 1 : rotate); 
-		Game.hero.ry -= rotate*Math.abs(rotate)*Game.rotateSpeed;
-		var vect = {};
-		vect.x = Game.hero.x;
-		vect.z = Game.hero.z;
-		vect.dx = Math.sin(Game.hero.ry)*forward + Math.cos(Game.hero.ry)*strafe;
-		vect.dz = Math.cos(Game.hero.ry)*forward - Math.sin(Game.hero.ry)*strafe;
-		hitTest(vect, Origami.world.raycasting.map, Origami.world.raycasting.tile);
-		Game.hero.x = vect.x;
-		Game.hero.z = vect.z;
-		
-		
-		
-		
-		
-		Origami.render();
+		rotate = - rotate*Math.abs(rotate)*Game.rotateSpeed;
+	}
+
+	return {forward: forward, 
+			strafe: strafe, 
+			rotate: rotate};
+}
+
+function drawGUI(){
+	if(!Game.isPaused){
+		Origami.ctx.lineWidth = 3;
 		Origami.ctx.strokeStyle = "#FFFFFF";
 		Origami.ctx.beginPath();
-		if(!Game.isPaused){
-			Origami.ctx.arc(downPos.x*Origami.size.w/Origami.canvas.clientWidth, downPos.y*Origami.size.h/Origami.canvas.clientHeight, 50, 0, Math.PI*2, true);
+		Origami.ctx.arc(downPos.x*Origami.size.w/Origami.canvas.clientWidth, downPos.y*Origami.size.h/Origami.canvas.clientHeight, 25, 0, Math.PI*2, true);
+		if(currentOrientation.alpha === false){
+			Origami.ctx.moveTo(Mouse.pos.x*Origami.size.w/Origami.canvas.clientWidth + 15, Mouse.pos.y*Origami.size.h/Origami.canvas.clientHeight);
+			Origami.ctx.arc(Mouse.pos.x*Origami.size.w/Origami.canvas.clientWidth, Mouse.pos.y*Origami.size.h/Origami.canvas.clientHeight, 15, 0, Math.PI*2, true);
 		}
 		Origami.ctx.stroke();
-		FPS.frameComplete();
-		Origami.ctx.fillText(Game.log, 0, 15);
 	}
+	
+}
+function setRotation(e){
+	currentOrientation.alpha = e.alpha*Math.PI/180;
+	currentOrientation.beta = e.beta*Math.PI/180;
+	currentOrientation.gamma = e.gamma*Math.PI/180;
 }
 
 Origami.initWorld(function(){
 	Game.hero = Origami.cam;
 	Game.hero.ys = 0;
 	Enemy.shape = Origami.world.shapes[0];
-	doResize();
+	setTimeout(doResize, 1);
+	setTimeout(function(){scrollTo(0,1);},1);
+	if("DeviceOrientationEvent" in window){
+		window.addEventListener("interfaceorientation", setRotation, false);
+	}
 	Animation.start(playGame);
 });

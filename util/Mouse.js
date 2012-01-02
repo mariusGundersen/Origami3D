@@ -17,11 +17,9 @@ var Mouse = (function(){
 		if (e.pageX || e.pageY) {
 			pos.x = e.pageX;
 			pos.y = e.pageY;
-		} else if (e.clientX || e.clientY) 	{
-			pos.x = e.clientX + document.body.scrollLeft
-				+ document.documentElement.scrollLeft;
-			pos.y = e.clientY + document.body.scrollTop
-				+ document.documentElement.scrollTop;
+		} else if (e.x || e.y) 	{
+			pos.x = e.clientX;// + document.body.scrollLeft + document.documentElement.scrollLeft;
+			pos.y = e.clientY;// + document.body.scrollTop + document.documentElement.scrollTop;
 		}
 		return pos;
 	};
@@ -31,8 +29,8 @@ var Mouse = (function(){
 		if(event.type !== "touchend"){
 			pos.x = epos.x - offset.x;
 			pos.y = epos.y - offset.y;
-			pos.xh = pos.x - element.width/2;
-			pos.yh = pos.y - element.height/2;
+			pos.xh = pos.x - element.clientWidth/2;
+			pos.yh = pos.y - element.clientHeight/2;
 		}
 		if(event.type == "DOMMouseScroll"){
 			pos.z += event.detail/Math.abs(event.detail)*5;

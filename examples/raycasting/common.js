@@ -128,3 +128,51 @@ function hitTest(hero, map, tile){
 	
 		
 }
+
+
+
+function playGame(time){
+	if(Game.isPaused){
+		Origami.ctx.textAlign = "center";
+		Origami.ctx.textBaseline = "middle";
+		Origami.ctx.font = '24pt arial,sans-serif';
+		Origami.ctx.fillStyle = "#FFAA00";
+		Origami.ctx.strokeStyle = "#000000";
+		Origami.ctx.strokeText("PAUSED",Origami.size.hw,Origami.size.hh);
+		Origami.ctx.fillText("PAUSED",Origami.size.hw,Origami.size.hh);
+		
+		if(shouldUnpause()){
+			Game.isPaused = false;
+		}
+	}else{
+		if(shouldPause(time)){
+			Game.isPaused = true;
+		}
+		
+		var speed = time/20;
+		
+		moveEnemy(speed);
+				
+		var input = getUserInput(speed);
+		
+		Game.hero.ry += input.rotate;
+		
+		var vect = {};
+		vect.x = Game.hero.x;
+		vect.z = Game.hero.z;
+		vect.dx = Math.sin(Game.hero.ry)*input.forward + Math.cos(Game.hero.ry)*input.strafe;
+		vect.dz = Math.cos(Game.hero.ry)*input.forward - Math.sin(Game.hero.ry)*input.strafe;
+		hitTest(vect, Origami.world.raycasting.map, Origami.world.raycasting.tile);
+		Game.hero.x = vect.x;
+		Game.hero.z = vect.z;
+		
+		
+		
+		
+		
+		Origami.render();
+		drawGUI();
+		FPS.frameComplete();
+		Origami.ctx.fillText(Game.log, 0, 15);
+	}
+}
