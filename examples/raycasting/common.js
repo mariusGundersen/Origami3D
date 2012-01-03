@@ -2,7 +2,6 @@
 
 Origami.canvas = document.getElementById("c");
 
-Mouse.init(window, document.getElementById("c"));
 FPS.color = "#FFFFFF";
 
 var Game = {};

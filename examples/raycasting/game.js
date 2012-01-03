@@ -2,6 +2,7 @@
 
 
 Key.init(document);
+Mouse.init(window, document.getElementById("c"));
 
 
 
